@@ -138,6 +138,14 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();// 获取矩阵边界
+        for (int i=0; i<size; i++) {// 遍历矩阵单元
+            for (int j=0; j<size; j++) {
+                if (b.tile(i,j) == null) {// 判断单元值是否为null TODO: 追tile
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +156,14 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int size = b.size();// 获取矩阵边界
+        for (int i=0; i<size; i++) {// 遍历矩阵单元
+            for (int j=0; j<size; j++) {
+                if (b.tile(i,j) != null && b.tile(i,j).value() == MAX_PIECE) {// 判断单元值是否为null TODO: 追tile
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +175,27 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b)) {// empty space exist
+            return true;
+        }
+        return adjacentSameExists(b);
+//        return false;
+    }
+    private static boolean adjacentSameExists(Board b) {
+        // TODO: Fill in this function.
+        // 是否存在相邻的等值块
+        int size = b.size();// 获取矩阵边界
+        for (int i=0; i<size; i++) {// 遍历矩阵单元
+            for (int j=0; j<size; j++) {
+                if (j == size-1 && i != size-1 && b.tile(i,j).value() == b.tile(i+1,j).value()) {// 右边界
+                    return true;
+                } else if (i == size-1 && j != size-1 && b.tile(i,j).value() == b.tile(i, j+1).value()) {// 下边界
+                    return true;
+                } else if (i != size-1 && j != size-1 && (b.tile(i,j).value() == b.tile(i, j+1).value() || b.tile(i,j).value() == b.tile(i+1, j).value())) {// 其它
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
