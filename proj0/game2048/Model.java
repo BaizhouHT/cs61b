@@ -12,6 +12,7 @@ public class Model extends Observable {
     private Board board;
     /** Current score. */
     private int score;
+
     /** Maximum score so far.  Updated when game ends. */
     private int maxScore;
     /** True iff game is ended. */
@@ -36,6 +37,7 @@ public class Model extends Observable {
     /** A new 2048 game where RAWVALUES contain the values of the tiles
      * (0 if null). VALUES is indexed by (row, col) with (0, 0) corresponding
      * to the bottom-left corner. Used for testing purposes. */
+    // Constructor
     public Model(int[][] rawValues, int score, int maxScore, boolean gameOver) {
         int size = rawValues.length;
         board = new Board(rawValues, score);
@@ -107,16 +109,46 @@ public class Model extends Observable {
      *    and the trailing tile does not.
      * */
     public boolean tilt(Side side) {
+        // side: direction north...
+        //  NORTH(0, 0, 0, 1), EAST(0, 1, 1, 0)
+        //  WEST(1, 0, -1, 0), SOUTH(1, 1, 0, -1);
         boolean changed;
         changed = false;
 
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        // TODO: already finished up move, to finish other direction today
+
+        for (int col=0; col< board.size(); col++) {
+            int point = 0;// 融合次数判断，最多为1次
+            for (int row=board.size()-2; row >= 0; row--) {
+                // 从最上面开始向下遍历至row+1，逐行检查
+                if (board.tile(col, row)==null) {
+                    continue;
+                }
+                for (int subRow=board.size()-1; subRow>row; subRow--) {
+                    if (board.tile(col,subRow)==null) {
+                        board.move(col,subRow,board.tile(col, row));
+                        changed = true;
+                        break;
+                    } else if (board.tile(col,subRow).value() == board.tile(col,row).value() && point == 0){
+                        point +=1;
+                        int scoreMerged = board.tile(col,subRow).value()*2;
+                        board.move(col,subRow,board.tile(col, row));
+                        score = scoreMerged;
+                        changed = true;
+                        break;
+                    } else {
+                        continue;
+                    }
+                }
+            }
+        }
 
         checkGameOver();
         if (changed) {
-            setChanged();
+            setChanged();// make changed = true
         }
         return changed;
     }
@@ -141,7 +173,7 @@ public class Model extends Observable {
         int size = b.size();// 获取矩阵边界
         for (int i=0; i<size; i++) {// 遍历矩阵单元
             for (int j=0; j<size; j++) {
-                if (b.tile(i,j) == null) {// 判断单元值是否为null TODO: 追tile
+                if (b.tile(i,j) == null) {// 判断单元值是否为null
                     return true;
                 }
             }
@@ -181,6 +213,9 @@ public class Model extends Observable {
         return adjacentSameExists(b);
 //        return false;
     }
+    /**
+     * Returns true if there are any two adjacent tiles with the same value
+     */
     private static boolean adjacentSameExists(Board b) {
         // TODO: Fill in this function.
         // 是否存在相邻的等值块
