@@ -118,10 +118,12 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
-        // TODO: already finished up move, to finish other direction today
 
+
+        int[][] bCopy = new int[board.size()][board.size()];// 建立标记矩阵，维护标记区块
+        board.setViewingPerspective(side);
         for (int col=0; col< board.size(); col++) {
-            int point = 0;// 融合次数判断，最多为1次
+//            int point = 0;// 融合次数判断，最多为1次
             for (int row=board.size()-2; row >= 0; row--) {
                 // 从最上面开始向下遍历至row+1，逐行检查
                 if (board.tile(col, row)==null) {
@@ -132,19 +134,18 @@ public class Model extends Observable {
                         board.move(col,subRow,board.tile(col, row));
                         changed = true;
                         break;
-                    } else if (board.tile(col,subRow).value() == board.tile(col,row).value() && point == 0){
-                        point +=1;
+                    } else if (board.tile(col,subRow).value() == board.tile(col,row).value() && bCopy[board.size()-1-subRow][col] != 1){// 判断移动目标区块是否被标记过
+                        bCopy[board.size()-1-subRow][col] = 1;// 将merge后的location置为1，确保同一区块最多merge一次，矩阵与board互为行倒置
                         int scoreMerged = board.tile(col,subRow).value()*2;
                         board.move(col,subRow,board.tile(col, row));
-                        score = scoreMerged;
+                        score += scoreMerged;
                         changed = true;
                         break;
-                    } else {
-                        continue;
                     }
                 }
             }
         }
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
