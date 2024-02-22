@@ -1,5 +1,7 @@
 package IntList;
 
+import jh61b.junit.In;
+
 public class IntListExercises {
 
     /**
@@ -66,18 +68,46 @@ public class IntListExercises {
      * @param lst IntList from Lecture
      * @return True if there was an update to the list
      */
+//    public static boolean squarePrimes(IntList lst) {
+//        // Base Case: we have reached the end of the list
+//        if (lst == null) {
+//            return false;
+//        }
+//
+//        boolean currElemIsPrime = Primes.isPrime(lst.first);
+//
+//        if (currElemIsPrime) {
+//            lst.first *= lst.first;
+//        }
+//
+//        return currElemIsPrime || squarePrimes(lst.rest);
+//    }
+
     public static boolean squarePrimes(IntList lst) {
         // Base Case: we have reached the end of the list
         if (lst == null) {
             return false;
         }
+        boolean hasPrime = false;
+        return rePro(lst, hasPrime);
+    }
 
-        boolean currElemIsPrime = Primes.isPrime(lst.first);
-
-        if (currElemIsPrime) {
-            lst.first *= lst.first;
+    /**
+     * recursion process, process list in value return method
+     * @param lst
+     * @param hasPrime
+     * @return hasPrime
+     */
+    private static boolean rePro(IntList lst, boolean hasPrime) {
+        if (lst == null) {
+            return hasPrime;// final return
         }
-
-        return currElemIsPrime || squarePrimes(lst.rest);
+        if (Primes.isPrime(lst.first)) {
+            lst.first *= lst.first;
+            if (!hasPrime) {
+                hasPrime = true;
+            }
+        }
+        return rePro(lst.rest, hasPrime);
     }
 }
