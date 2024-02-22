@@ -30,6 +30,9 @@ public class IntListExercises {
      * @param L IntList from Lecture
      */
     public static void setToZeroIfMaxFEL(IntList L) {
+        if (L == null) {
+            return;
+        }
         IntList p = L;
         while (p != null) {
             if (firstDigitEqualsLastDigit(max(p))) {
