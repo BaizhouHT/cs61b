@@ -26,4 +26,15 @@ public class SetToZeroIfMaxFELTest {
         assertEquals("0 -> 0 -> 35 -> 0 -> 10 -> 0", L.toString());
     }
 
+    /**
+     * anti-test
+     * list element has negative value
+     */
+    @Test
+    public void testZeroOutFELMaxes4() {
+        IntList L = IntList.of(5, 535, 35, 11, 10, -1);
+        IntListExercises.setToZeroIfMaxFEL(L);
+        assertEquals("0 -> 0 -> 35 -> 0 -> 10 -> -1", L.toString());
+    }
+
 }

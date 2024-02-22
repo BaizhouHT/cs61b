@@ -59,6 +59,9 @@ public class IntListExercises {
      *  the first digit of x.
      */
     public static boolean firstDigitEqualsLastDigit(int x) {
+        if (x<0) {
+            return false;
+        }
         int lastDigit = x % 10;// get the last right num (single digit)
         while (x > 10) {
             x = x / 10;
