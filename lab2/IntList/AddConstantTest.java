@@ -8,7 +8,7 @@ public class AddConstantTest {
     @Test
     public void testAddConstantOne() {
         IntList lst = IntList.of(1, 2, 3, 4, 5);
-        IntListExercises.addConstant(lst, 1);
+        IntListExercises.addConstant(lst, 1);// TODO: fix ..addConstant
         assertEquals("2 -> 3 -> 4 -> 5 -> 6", lst.toString());
     }
 
