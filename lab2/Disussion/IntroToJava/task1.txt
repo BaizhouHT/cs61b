@@ -1,0 +1,19 @@
+1 Our First Java Program
+
+Below is our first Java program of the semester. Next to each line, write out what
+you think the code will do when run. If you think the line will result in an error,
+correct it, and proceed through the code as if it is running your corrected version.
+This exercise is adapted from Head First Java
+
+int size = 27;
+String name = "Fido";
+Dog myDog = new Dog(name, size);
+Dog yourDog = new Dog("Scruffy", 1000);
+Dog[] dogList = new Dog[3];
+dogList[0] = myDog;
+dogList[1] = yourDog;
+doglist[2] = new Dog("Cutie", 8)
+int x = size - 5;
+if (x < 15) {
+    myDog.bark();
+}
