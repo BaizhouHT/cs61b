@@ -1,5 +1,6 @@
 package deque;
 
+import edu.princeton.cs.introcs.StdRandom;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -13,8 +14,6 @@ public class LinkedListDequeTest {
      *
      * && is the "and" operation. */
     public void addIsEmptySizeTest() {
-
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
         LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
 
@@ -41,8 +40,6 @@ public class LinkedListDequeTest {
     /** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
     public void addRemoveTest() {
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 		// should be empty
 		assertTrue("lld1 should be empty upon initialization", lld1.isEmpty());
@@ -60,8 +57,6 @@ public class LinkedListDequeTest {
     @Test
     /* Tests removing from an empty deque */
     public void removeEmptyTest() {
-
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
         lld1.addFirst(3);
@@ -103,8 +98,6 @@ public class LinkedListDequeTest {
     /* check if null is return when removing from an empty LinkedListDeque. */
     public void emptyNullReturnTest() {
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 
         boolean passed1 = false;
@@ -118,8 +111,6 @@ public class LinkedListDequeTest {
     @Test
     /* Add large number of elements to deque; check if order is correct. */
     public void bigLLDequeTest() {
-
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
         for (int i = 0; i < 1000000; i++) {
@@ -185,4 +176,40 @@ public class LinkedListDequeTest {
             assertEquals(String.valueOf(i), lld1.getRecursive(i));
         }
     }
+
+//    @Test
+//    /** compare test
+//     * finally check the 2 implementation deque difference
+//     */
+//    public void randomizedTest() {
+//        LinkedListDeque<Integer> L = new LinkedListDeque<>();
+//        ArrayDeque<Integer> LB = new ArrayDeque<>();
+//
+//        int N = 999;
+//        for (int i = 0; i < N; i += 1) {
+//            int operationNumber = StdRandom.uniform(0, 4);
+//            if (operationNumber == 0) {
+//                // addLast
+//                int randVal = StdRandom.uniform(0, 100);
+//                L.addLast(randVal);
+//                LB.addLast(randVal);
+//            } else if (operationNumber == 1) {
+//                // size
+//                int size = L.size();
+//                int sizeLb = LB.size();
+//                assertEquals(size, sizeLb);
+//            } else if (operationNumber == 2 && L.size() != 0) {
+//                // getLast
+//                int last = L.get(i);
+//                int lastLb = LB.get(i);
+//                assertEquals(last, lastLb);
+//            }
+//            else if (operationNumber == 3 && L.size() != 0) {
+//                // removeLast
+//                int remove = L.removeLast();
+//                int removeLb = LB.removeLast();
+//                assertEquals(remove, removeLb);
+//            }
+//        }
+//    }
 }

@@ -88,7 +88,7 @@ public class LinkedListDeque<T> {
         Node temp = sentinelOrigin;
         while (temp.next != sentinelOrigin) {
             temp = temp.next;
-            System.out.println(temp.item + " ");
+            System.out.println(temp.item + (temp.next.equals(sentinelOrigin)?"\n":" "));
         }
     }
 
