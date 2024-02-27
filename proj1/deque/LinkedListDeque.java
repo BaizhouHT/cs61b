@@ -8,7 +8,7 @@ import java.util.Iterator;
  * @Date: 2/24/2024 12:03 PM
  * @Version: 1.0
  */
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T> {
 
     private class Node<T> {
         private T item;
@@ -28,6 +28,7 @@ public class LinkedListDeque<T> {
      */
     public Node sentinelOrigin;
     private int size;
+    private Node iteratorNode = sentinelOrigin;
 
     /**
      * Constructor of deque, initialize an empty deque
@@ -37,6 +38,7 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
+    @Override
     public void addFirst(T item) {
         Node temp = new Node(item, null, null);
         if (size == 0) {
@@ -53,6 +55,7 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
+    @Override
     public void addLast(T item) {
         Node temp = new Node(item, null, null);
         if (size == 0) {
@@ -69,17 +72,12 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
-    public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void printDeque() {
         if (size == 0) {
             System.out.println();
@@ -92,6 +90,7 @@ public class LinkedListDeque<T> {
         }
     }
 
+    @Override
     public T removeFirst() {
         T removeEle = null;
         if (size == 0) {
@@ -104,6 +103,7 @@ public class LinkedListDeque<T> {
         return removeEle;
     }
 
+    @Override
     public T removeLast() {
         T removeEle = null;
         if (size == 0) {
@@ -116,6 +116,7 @@ public class LinkedListDeque<T> {
         return removeEle;
     }
 
+    @Override
     public T get(int index) {
         T item = null;
         Node temp = sentinelOrigin.next;
@@ -146,11 +147,34 @@ public class LinkedListDeque<T> {
         return (T) recursiveProcess(recDeepth, sen.next);
     }
 
-//    public Iterator<T> iterator() {
-//        return null;
-//    }
-//
-//    public boolean equals(Object o) {
-//        return false;
-//    }
+    public Iterator<T> iterator() {
+        Iterator<T> itor = new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return iteratorNode != null && iteratorNode.next != null;
+            }
+
+            @Override
+            public T next() {
+                return (T) nextNode().item;
+            }
+
+            public Node nextNode() {
+                return iteratorNode.next;
+            }
+        };
+        return itor;
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof Deque) {
+            for (int i=0;  i<((Deque<?>) o).size(); i++) {
+                if (((Deque<?>) o).get(i) != this.get(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }

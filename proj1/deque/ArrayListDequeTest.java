@@ -3,6 +3,9 @@ package deque;
 import edu.princeton.cs.introcs.StdRandom;
 import org.junit.Test;
 
+import java.util.Comparator;
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 
@@ -280,5 +283,95 @@ public class ArrayListDequeTest {
                 assertEquals(remove, removeLb);
             }
         }
+    }
+
+    @Test
+    /** MaxArrayDeque(...), max()
+     * max array list ele test, comparator test
+     */
+    public void maxArrayDequeTest() {
+        LinkedListDeque<Integer> L = new LinkedListDeque<>();
+//        ArrayDeque<Integer> LB = new ArrayDeque<>();
+        MaxArrayDeque<Integer> LB = new MaxArrayDeque<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1-o2;
+            }
+        });
+
+        int addedSize = 0;
+        int N = 999;
+        for (int i = 0; i < N; i += 1) {
+            int operationNumber = StdRandom.uniform(0, 6);
+            if (operationNumber == 0) {
+                // addLast
+                int randVal = StdRandom.uniform(0, 100);
+                L.addLast(randVal);
+                LB.addLast(randVal);
+                addedSize += 1;
+            } else if (operationNumber == 1) {
+                // size
+                int size = L.size();
+                int sizeLb = LB.size();
+                assertEquals(size, sizeLb);
+            } else if (operationNumber == 2 && L.size() != 0) {
+                // getLast
+                int randomIndex = StdRandom.uniform(0, addedSize);
+                int last = L.get(randomIndex);
+                int lastLb = LB.get(randomIndex);
+                assertEquals(last, lastLb);
+            } else if (operationNumber == 3 && L.size() != 0) {
+                // removeLast
+                int remove = L.removeLast();
+                int removeLb = LB.removeLast();
+                addedSize -= 1;
+                assertEquals(remove, removeLb);
+            } else if (operationNumber == 4) {
+                // addFirst
+                int randVal = StdRandom.uniform(0, 100);
+                L.addFirst(randVal);
+                LB.addFirst(randVal);
+                addedSize += 1;
+            } else if (operationNumber == 5 && L.size() != 0) {
+                // removeFirst
+                int remove = L.removeFirst();
+                int removeLb = LB.removeFirst();
+                addedSize -= 1;
+                assertEquals(remove, removeLb);
+            }
+        }
+        int test = LB.max();
+        System.out.println(test);
+
+        int test1 = LB.max(new Comparator<Integer>() {// min test
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2-o1;
+            }
+        });
+        System.out.println(test1);
+
+        assertTrue(LB.equals(L));
+        assertTrue(L.equals(LB));
+
+
+    }
+
+    @Test
+    /**
+     * Iterator test
+     */
+    public void iteratoTest() {
+
+        ArrayDeque<String> lld1 = new ArrayDeque<String>();
+
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+        lld1.printDeque();
+
+        while (lld1.iterator().hasNext()) {
+            System.out.println(lld1.iterator().next());
+        };
     }
 }

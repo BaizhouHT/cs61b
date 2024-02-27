@@ -177,39 +177,58 @@ public class LinkedListDequeTest {
         }
     }
 
-//    @Test
-//    /** compare test
-//     * finally check the 2 implementation deque difference
-//     */
-//    public void randomizedTest() {
-//        LinkedListDeque<Integer> L = new LinkedListDeque<>();
-//        ArrayDeque<Integer> LB = new ArrayDeque<>();
-//
-//        int N = 999;
-//        for (int i = 0; i < N; i += 1) {
-//            int operationNumber = StdRandom.uniform(0, 4);
-//            if (operationNumber == 0) {
-//                // addLast
-//                int randVal = StdRandom.uniform(0, 100);
-//                L.addLast(randVal);
-//                LB.addLast(randVal);
-//            } else if (operationNumber == 1) {
-//                // size
-//                int size = L.size();
-//                int sizeLb = LB.size();
-//                assertEquals(size, sizeLb);
-//            } else if (operationNumber == 2 && L.size() != 0) {
-//                // getLast
-//                int last = L.get(i);
-//                int lastLb = LB.get(i);
-//                assertEquals(last, lastLb);
-//            }
-//            else if (operationNumber == 3 && L.size() != 0) {
-//                // removeLast
-//                int remove = L.removeLast();
-//                int removeLb = LB.removeLast();
-//                assertEquals(remove, removeLb);
-//            }
-//        }
-//    }
+    @Test
+    /** compare test
+     * finally check the 2 implementation deque difference
+     */
+    public void randomizedTest() {
+        LinkedListDeque<Integer> L = new LinkedListDeque<>();
+        ArrayDeque<Integer> LB = new ArrayDeque<>();
+
+        int N = 999;
+        for (int i = 0; i < N; i += 1) {
+            int operationNumber = StdRandom.uniform(0, 4);
+            if (operationNumber == 0) {
+                // addLast
+                int randVal = StdRandom.uniform(0, 100);
+                L.addLast(randVal);
+                LB.addLast(randVal);
+            } else if (operationNumber == 1) {
+                // size
+                int size = L.size();
+                int sizeLb = LB.size();
+                assertEquals(size, sizeLb);
+            } else if (operationNumber == 2 && L.size() != 0) {
+                // getLast
+                int last = L.get(i);
+                int lastLb = LB.get(i);
+                assertEquals(last, lastLb);
+            }
+            else if (operationNumber == 3 && L.size() != 0) {
+                // removeLast
+                int remove = L.removeLast();
+                int removeLb = LB.removeLast();
+                assertEquals(remove, removeLb);
+            }
+        }
+
+    }
+
+    @Test
+    /**
+     * Iterator test
+     */
+    public void iteratoTest() {
+
+        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+        lld1.printDeque();
+
+        while (lld1.iterator().hasNext()) {
+            System.out.println(lld1.iterator().next());
+        };
+    }
 }

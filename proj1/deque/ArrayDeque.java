@@ -1,17 +1,20 @@
 package deque;
 
 
+import java.util.Iterator;
+
 /**
  * @Description: data structure, array implementation of deque, circular implementation with double point
  * @Author: Harrison
  * @Date: 2/25/2024 2:28 PM
  * @Version: 1.0
  */
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
     private T[] arrayDq;
     private int size;
     private int theoHeadIndex; // circular implementation head point for negative des
     private int theoTailIndex; // circular implementation tail point for positive des
+    private int iteratorIndex = -1;
 
     public int indexChange(int indexBefore) {
         return (arrayDq.length+indexBefore)%arrayDq.length;
@@ -19,6 +22,13 @@ public class ArrayDeque<T> {
 
     public ArrayDeque() {// Constructor
         arrayDq = (T[]) new Object[8];
+        size = 0;
+        theoHeadIndex = 0;
+        theoTailIndex = 0;
+    }
+
+    public ArrayDeque(int capacity) {// Constructor
+        arrayDq = (T[]) new Object[capacity];
         size = 0;
         theoHeadIndex = 0;
         theoTailIndex = 0;
@@ -71,6 +81,7 @@ public class ArrayDeque<T> {
         }
     }
 
+    @Override
     public void addLast(T item) {
         if (arrayDq.length >= 16 || size >= arrayDq.length) {
             resize();
@@ -85,6 +96,7 @@ public class ArrayDeque<T> {
         size += 1;
     }
 
+    @Override
     public void addFirst(T item) {
         if (arrayDq.length >= 16 || size >= arrayDq.length) {
             resize();
@@ -99,17 +111,12 @@ public class ArrayDeque<T> {
         size += 1;
     }
 
-    public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void printDeque() {
         if (size == 0) {
             System.out.println();
@@ -120,6 +127,7 @@ public class ArrayDeque<T> {
         }
     }
 
+    @Override
     public T removeFirst() {
         T itemOut = null;
         if (size == 0) {
@@ -131,6 +139,7 @@ public class ArrayDeque<T> {
         return itemOut;
     }
 
+    @Override
     public T removeLast() {
         T itemOut = null;
         if (size == 0) {
@@ -142,11 +151,40 @@ public class ArrayDeque<T> {
         return itemOut;
     }
 
+    @Override
     public T get(int index) {
         if (index < 0 || index >= size) {
             System.out.println("Index "+ index + " is out of the ArrayList index " + (size-1) + ".");
             return null;
         }
         return arrayDq[indexChange(theoHeadIndex+index)];
+    }
+
+    public Iterator<T> iterator() {
+        Iterator<T> itor = new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return iteratorIndex+1<size && arrayDq[indexChange(theoHeadIndex+iteratorIndex)] != null;
+            }
+
+            @Override
+            public T next() {
+                iteratorIndex += 1;
+                return arrayDq[indexChange(theoHeadIndex+iteratorIndex)];
+            }
+        };
+        return itor;
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof Deque) {
+            for (int i=0; i<((Deque<?>) o).size(); i++) {
+                if (((Deque<?>) o).get(i) != this.get(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }
