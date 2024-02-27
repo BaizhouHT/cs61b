@@ -10,7 +10,7 @@ import edu.princeton.cs.algs4.StdDraw;
  * @Version:
  */
 public class GuitarHero {
-    public static String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
+    private static String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
 
     public static boolean charCheck(char key) {
         return keyboard.indexOf(key) < 0;
@@ -18,8 +18,8 @@ public class GuitarHero {
 
     public static void main(String[] args) {
         GuitarString[] grr = new GuitarString[keyboard.length()];
-        for (int i=0; i<keyboard.length(); i++) {
-            grr[i] = new GuitarString(440*Math.pow(2, (i-24)/12));
+        for (int i = 0; i < keyboard.length(); i++) {
+            grr[i] = new GuitarString(440 * Math.pow(2, (i - 24) / 12));
         }
         while (true) {
             /* check if the user has typed a key; if so, process it */
@@ -33,7 +33,7 @@ public class GuitarHero {
 
             /* compute the superposition of samples */
             double sample = 0.0;
-            for (int i=0; i<keyboard.length(); i++) {
+            for (int i = 0; i < keyboard.length(); i++) {
                 sample += grr[i].sample();
             }
 
@@ -41,7 +41,7 @@ public class GuitarHero {
             StdAudio.play(sample);
 
             /* advance the simulation of each guitar string by one step */
-            for (int i=0; i<keyboard.length(); i++) {
+            for (int i = 0; i < keyboard.length(); i++) {
                 grr[i].tic();
             }
         }

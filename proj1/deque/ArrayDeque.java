@@ -169,7 +169,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public T get(int index) {
         if (index < 0 || index >= size) {
-            System.out.println("Index " + index + " is out of the ArrayList index " + (size - 1) + ".");
+            System.out.println("Index " + index +
+                    " is out of the ArrayList index " + (size - 1) + ".");
             return null;
         }
         return arrayDq[indexChange(theoHeadIndex + index)];
@@ -203,19 +204,37 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (o == this) {
             return true;
         }
-        if (!(o instanceof LinkedListDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
-        LinkedListDeque<?> lld = (LinkedListDeque<?>) o;
-        if (lld.size() != size) {
-            return false;
-        }
-        for (int i = 0; i < size; i++) {
-            if (!lld.get(i).equals(this.get(i))) {
+        if (o instanceof LinkedListDeque) {
+            LinkedListDeque<T> other = (LinkedListDeque<T>) o;
+            if (this.size() != other.size()) {
                 return false;
             }
+            Iterator<T> dequeIt = this.iterator();
+            Iterator<T> otherIt = other.iterator();
+            while (dequeIt.hasNext()) {
+                if (!dequeIt.next().equals(otherIt.next())) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (o instanceof ArrayDeque) {
+            ArrayDeque<T> other = (ArrayDeque<T>) o;
+            if (this.size() != other.size()) {
+                return false;
+            }
+            Iterator<T> thisIt = iterator();
+            Iterator<T> otherIt = other.iterator();
+            while (thisIt.hasNext()) {
+                if (!thisIt.next().equals(otherIt.next())) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
 }

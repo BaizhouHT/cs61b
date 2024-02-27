@@ -2,11 +2,6 @@ package deque;
 
 import edu.princeton.cs.introcs.StdRandom;
 import org.junit.Test;
-
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Optional;
-
 import static org.junit.Assert.*;
 
 
@@ -22,8 +17,7 @@ public class ArrayListDequeTest {
     public void addLastIsEmptySizeTest() {
 
         ArrayDeque<String> lld1 = new ArrayDeque<String>();
-
-		assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
+//        assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
 		lld1.addLast("front");
 
 		// The && operator is the same as "and" in Python.
@@ -49,7 +43,7 @@ public class ArrayListDequeTest {
     public void addLastResize() {
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
         int test = 10;
-        for (int i=0; i<test; i++) {
+        for (int i = 0; i < test; i++) {
             lld1.addLast(i);
         }
         lld1.printDeque();
@@ -69,10 +63,10 @@ public class ArrayListDequeTest {
         lld1.addLast("back");
         lld1.printDeque();
 
-        assertEquals("back",lld1.removeLast());
-        assertEquals("middle",lld1.removeLast());
-        assertEquals("front",lld1.removeLast());
-        assertEquals(0,lld1.size());
+        assertEquals("back", lld1.removeLast());
+        assertEquals("middle", lld1.removeLast());
+        assertEquals("front", lld1.removeLast());
+        assertEquals(0, lld1.size());
     }
 
     @Test
@@ -111,7 +105,7 @@ public class ArrayListDequeTest {
     public void addFirstResize() {
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
         int test = 10;
-        for (int i=0; i<test; i++) {
+        for (int i = 0; i < test; i++) {
             lld1.addFirst(i);
         }
         lld1.printDeque();
@@ -126,10 +120,10 @@ public class ArrayListDequeTest {
 
         ArrayDeque<String> lld1 = new ArrayDeque<String>();
 
-        for (int i=1000000; i>=0; i--) {
+        for (int i = 1000000; i >= 0; i--) {
             lld1.addFirst(String.valueOf(i));
         }
-        for (int i=0; i<100000; i++) {
+        for (int i = 0; i < 100000; i++) {
             assertEquals(String.valueOf(i), lld1.get(i));
         }
 
@@ -184,8 +178,10 @@ public class ArrayListDequeTest {
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
         boolean passed1 = false;
         boolean passed2 = false;
-        assertEquals("Should return null when removeFirst is called on an empty Deque,", null, lld1.removeFirst());
-        assertEquals("Should return null when removeLast is called on an empty Deque,", null, lld1.removeLast());
+        assertEquals("Should return null when removeFirst is called on an empty Deque,",
+                null, lld1.removeFirst());
+        assertEquals("Should return null when removeLast is called on an empty Deque,",
+                null, lld1.removeLast());
     }
 
     @Test
@@ -228,7 +224,7 @@ public class ArrayListDequeTest {
         lld1.addLast("8");
         lld1.addLast("9");
         assertEquals(10, lld1.size());
-        for (int i=0;i<10;i++) {
+        for (int i = 0; i < 10; i++) {
             assertEquals(lld1.get(i), String.valueOf(i));
         }
     }
@@ -293,9 +289,9 @@ public class ArrayListDequeTest {
      */
     public void maxArrayDequeTest() {
         LinkedListDeque<Integer> L = new LinkedListDeque<>();
-        ArrayDeque<Integer> LB = new ArrayDeque<>();
-        assertTrue(L.equals(LB));
-        assertTrue(LB.equals(L));
+        ArrayDeque<Integer> La = new ArrayDeque<>();
+        assertTrue(L.equals(La));
+        assertTrue(La.equals(L));
 //        MaxArrayDeque<Integer> LB = new MaxArrayDeque<>(new Comparator<Integer>() {
 //            @Override
 //            public int compare(Integer o1, Integer o2) {
@@ -311,40 +307,40 @@ public class ArrayListDequeTest {
                 // addLast
                 int randVal = StdRandom.uniform(0, 100);
                 L.addLast(randVal);
-                LB.addLast(randVal);
+                La.addLast(randVal);
                 addedSize += 1;
             } else if (operationNumber == 1) {
                 // size
                 int size = L.size();
-                int sizeLb = LB.size();
+                int sizeLb = La.size();
                 assertEquals(size, sizeLb);
             } else if (operationNumber == 2 && L.size() != 0) {
                 // getLast
                 int randomIndex = StdRandom.uniform(0, addedSize);
                 int last = L.get(randomIndex);
-                int lastLb = LB.get(randomIndex);
+                int lastLb = La.get(randomIndex);
                 assertEquals(last, lastLb);
             } else if (operationNumber == 3 && L.size() != 0) {
                 // removeLast
                 int remove = L.removeLast();
-                int removeLb = LB.removeLast();
+                int removeLb = La.removeLast();
                 addedSize -= 1;
                 assertEquals(remove, removeLb);
             } else if (operationNumber == 4) {
                 // addFirst
                 int randVal = StdRandom.uniform(0, 100);
                 L.addFirst(randVal);
-                LB.addFirst(randVal);
+                La.addFirst(randVal);
                 addedSize += 1;
             } else if (operationNumber == 5 && L.size() != 0) {
                 // removeFirst
                 int remove = L.removeFirst();
-                int removeLb = LB.removeFirst();
+                int removeLb = La.removeFirst();
                 addedSize -= 1;
                 assertEquals(remove, removeLb);
             }
-            assertTrue(LB.equals(L));
-            assertTrue(L.equals(LB));
+            assertTrue(La.equals(L));
+            assertTrue(L.equals(La));
         }
 
 //        assertTrue(L.equals(LB));

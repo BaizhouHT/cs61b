@@ -8,13 +8,13 @@ import java.util.Iterator;
  * @Date: 2/24/2024 12:03 PM
  * @Version: 1.0
  */
-public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
-
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private class Node<T> {
         private T item;
         private Node next;
         private Node prev;
-        public Node(T item, Node prev, Node next) {// Original Constructor
+        private Node(T item, Node prev, Node next) {
+            // Original Constructor
             this.item = item;
             this.prev = prev;
             this.next = next;
@@ -33,7 +33,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
      * Constructor of deque, initialize an empty deque
      */
     public LinkedListDeque() {
-        sentinelOrigin = new Node(999, null,null); //TODO: fix the null mis
+        sentinelOrigin = new Node(999, null, null);
         size = 0;
     }
 
@@ -85,7 +85,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         Node temp = sentinelOrigin;
         while (temp.next != sentinelOrigin) {
             temp = temp.next;
-            System.out.println(temp.item + (temp.next.equals(sentinelOrigin)?"\n":" "));
+            System.out.println(temp.item + (temp.next.equals(sentinelOrigin) ? "\n" : " "));
         }
     }
 
@@ -120,19 +120,19 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         T item = null;
         Node temp = sentinelOrigin.next;
         try {
-            for (int i=0; i<=index; i++) {
+            for (int i = 0; i <= index; i++) {
                 item = (T) temp.item;
                 temp = temp.next;
             }
         } catch (Exception e) {
-            System.out.println("Index "+ index + " is out of the list index " + (size - 1) + ".");
+            System.out.println("Index " + index + " is out of the list index " + (size - 1) + ".");
         }
         return item;
     }
 
     public T getRecursive(int index) {
-        if (index >= size ) {
-            System.out.println("Index "+ index + " is out of the list index " + (size - 1) + ".");
+        if (index >= size) {
+            System.out.println("Index " + index + " is out of the list index " + (size - 1) + ".");
             return null;
         }
         return recursiveProcess(index, sentinelOrigin);
@@ -173,19 +173,36 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         if (o == this) {
             return true;
         }
-        if (!(o instanceof ArrayDeque)) {
+        if (!(o instanceof Deque)) {
             return false;
         }
-
-        ArrayDeque<?> lld = (ArrayDeque<?>) o;
-        if (lld.size() != this.size) {
-            return false;
-        }
-        for (int i=0;  i<this.size; i++) {
-            if (!lld.get(i).equals(this.get(i))) {
+        if (o instanceof ArrayDeque) {
+            ArrayDeque<T> other = (ArrayDeque<T>) o;
+            if (other.size() != this.size) {
                 return false;
             }
+            Iterator<T> thisIt = iterator();
+            Iterator<T> otherIterator = other.iterator();
+            while (thisIt.hasNext()) {
+                if (!thisIt.next().equals(otherIterator.next())) {
+                    return false;
+                }
+            }
+            return true;
+        } else if (o instanceof LinkedListDeque) {
+            LinkedListDeque<T> other = (LinkedListDeque<T>) o;
+            if (other.size() != this.size) {
+                return false;
+            }
+            Iterator<T> thisIt = iterator();
+            Iterator<T> otherIterator = other.iterator();
+            while (thisIt.hasNext()) {
+                if (!thisIt.next().equals(otherIterator.next())) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 }

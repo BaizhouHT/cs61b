@@ -12,17 +12,19 @@ import java.util.Comparator;
 public class MaxArrayDeque<T> extends ArrayDeque<T> {
     private Comparator<T> comparator;
 
-    public MaxArrayDeque(Comparator<T> c) {// Constructor
+    public MaxArrayDeque(Comparator<T> c) {
+        // Constructor
         super();
         comparator = c;
     }
 
-    public T max() {// using initial comparator
+    public T max() {
+        // using initial comparator
         if (isEmpty()) {
             return null;
         }
         T maxiEle = (T) get(0);
-        for (int i=0; i<size(); i++) {
+        for (int i = 0; i < size(); i++) {
             if (comparator.compare((T) get(i), maxiEle) > 0) {
                 maxiEle = (T) get(i);
             }
@@ -30,12 +32,13 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         return maxiEle;
     }
 
-    public T max(Comparator<T> c) {// overload max() using new override comparator
+    public T max(Comparator<T> c) {
+        // overload max() using new override comparator
         if (isEmpty()) {
             return null;
         }
         T maxiEle = (T) get(0);
-        for (int i=0; i<size(); i++) {
+        for (int i = 0; i < size(); i++) {
             if (c.compare((T) get(i), maxiEle) > 0) {
                 maxiEle = (T) get(i);
             }
