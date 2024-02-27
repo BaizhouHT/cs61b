@@ -119,13 +119,12 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public T get(int index) {
         T item = null;
         Node temp = sentinelOrigin.next;
-        try {
-            for (int i = 0; i <= index; i++) {
-                item = (T) temp.item;
-                temp = temp.next;
-            }
-        } catch (Exception e) {
-            System.out.println("Index " + index + " is out of the list index " + (size - 1) + ".");
+        if (index < 0 || index >= size) {
+            return null;
+        }
+        for (int i = 0; i <= index; i++) {
+            item = (T) temp.item;
+            temp = temp.next;
         }
         return item;
     }
