@@ -26,7 +26,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     /**
      * origin node of circular deque
      */
-    public Node sentinelOrigin;
+    private Node sentinelOrigin;
     private int size;
     private Node iteratorNode = sentinelOrigin;
 
@@ -147,6 +147,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         return (T) recursiveProcess(recDeepth, sen.next);
     }
 
+    @Override
     public Iterator<T> iterator() {
         Iterator<T> itor = new Iterator<T>() {
             @Override
@@ -168,7 +169,10 @@ public class LinkedListDeque<T> implements Deque<T> {
 
     public boolean equals(Object o) {
         if (o instanceof Deque) {
-            for (int i=0;  i<((Deque<?>) o).size(); i++) {
+            if (((Deque<?>) o).size() != this.size) {
+                return false;
+            }
+            for (int i=0;  i<this.size; i++) {
                 if (((Deque<?>) o).get(i) != this.get(i)) {
                     return false;
                 }

@@ -14,21 +14,14 @@ public class ArrayDeque<T> implements Deque<T>{
     private int size;
     private int theoHeadIndex; // circular implementation head point for negative des
     private int theoTailIndex; // circular implementation tail point for positive des
-    private int iteratorIndex = -1;
 
-    public int indexChange(int indexBefore) {
+
+    private int indexChange(int indexBefore) {
         return (arrayDq.length+indexBefore)%arrayDq.length;
     }
 
     public ArrayDeque() {// Constructor
         arrayDq = (T[]) new Object[8];
-        size = 0;
-        theoHeadIndex = 0;
-        theoTailIndex = 0;
-    }
-
-    public ArrayDeque(int capacity) {// Constructor
-        arrayDq = (T[]) new Object[capacity];
         size = 0;
         theoHeadIndex = 0;
         theoTailIndex = 0;
@@ -62,7 +55,7 @@ public class ArrayDeque<T> implements Deque<T>{
      * 1. 100% add to 2length
      * 2. < 1/4 minus to 3/5length
      */
-    public void resize() {
+    private void resize() {
         if (size == arrayDq.length) {
             T[] temp = (T[]) new Object[arrayDq.length * 2];
             for (int i=theoHeadIndex, j=0; i<=theoTailIndex; i ++, j++ ) {
@@ -136,6 +129,9 @@ public class ArrayDeque<T> implements Deque<T>{
         itemOut = arrayDq[indexChange(theoHeadIndex)];
         pointMaintain(0, 0);
         size -= 1;
+        if (arrayDq.length >= 16 || size >= arrayDq.length) {
+            resize();
+        }
         return itemOut;
     }
 
@@ -148,6 +144,9 @@ public class ArrayDeque<T> implements Deque<T>{
         itemOut = arrayDq[indexChange(theoTailIndex)];
         pointMaintain(0, 1);
         size -= 1;
+        if (arrayDq.length >= 16 || size >= arrayDq.length) {
+            resize();
+        }
         return itemOut;
     }
 
@@ -160,8 +159,10 @@ public class ArrayDeque<T> implements Deque<T>{
         return arrayDq[indexChange(theoHeadIndex+index)];
     }
 
-    public Iterator<T> iterator() {
+    @Override
+    public Iterator<T> iterator()  {
         Iterator<T> itor = new Iterator<T>() {
+            private int iteratorIndex = -1;
             @Override
             public boolean hasNext() {
                 return iteratorIndex+1<size && arrayDq[indexChange(theoHeadIndex+iteratorIndex)] != null;
@@ -178,7 +179,10 @@ public class ArrayDeque<T> implements Deque<T>{
 
     public boolean equals(Object o) {
         if (o instanceof Deque) {
-            for (int i=0; i<((Deque<?>) o).size(); i++) {
+            if (((Deque<?>) o).size() != this.size) {
+                return false;
+            }
+            for (int i=0; i<this.size; i++) {
                 if (((Deque<?>) o).get(i) != this.get(i)) {
                     return false;
                 }
