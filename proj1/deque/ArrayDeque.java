@@ -13,11 +13,20 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] arrayDq;
     private int size;
     private int theoHeadIndex; // circular implementation head point for negative des
+    public int getTheoHeadIndex() {
+        return this.theoHeadIndex;
+    }
     private int theoTailIndex; // circular implementation tail point for positive des
+    public int getTheoTailIndex() {
+        return this.theoTailIndex;
+    }
+    public int getLength() {
+        return this.arrayDq.length;
+    }
 
 
     private int indexChange(int indexBefore) {
-        return (arrayDq.length+indexBefore)%arrayDq.length;
+        return (arrayDq.length + indexBefore % arrayDq.length) % arrayDq.length;
     }
 
     public ArrayDeque() {// Constructor
@@ -186,17 +195,18 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (o == this) {
             return true;
         }
-        if (o instanceof Deque) {
-            if (((Deque<?>) o).size() != this.size) {
+        if (!(o instanceof LinkedListDeque)) {
+            return false;
+        }
+        if (((LinkedListDeque<?>) o).size() != this.size) {
+            return false;
+        }
+        for (int i=0; i<this.size; i++) {
+            if (((LinkedListDeque<?>) o).get(i) != this.get(i)) {
                 return false;
             }
-            for (int i=0; i<this.size; i++) {
-                if (((Deque<?>) o).get(i) != this.get(i)) {
-                    return false;
-                }
-            }
-            return true;
         }
-        return false;
+        return true;
     }
+
 }

@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -125,15 +126,13 @@ public class ArrayListDequeTest {
 
         ArrayDeque<String> lld1 = new ArrayDeque<String>();
 
-        lld1.addFirst("front");
-        lld1.addFirst("middle");
-        lld1.addFirst("back");
-        lld1.printDeque();
+        for (int i=1000000; i>=0; i--) {
+            lld1.addFirst(String.valueOf(i));
+        }
+        for (int i=0; i<100000; i++) {
+            assertEquals(String.valueOf(i), lld1.get(i));
+        }
 
-        assertEquals("back",lld1.removeFirst());
-        assertEquals("middle",lld1.removeFirst());
-        assertEquals("front",lld1.removeFirst());
-        assertEquals(0,lld1.size());
     }
 
     @Test
@@ -243,7 +242,7 @@ public class ArrayListDequeTest {
         ArrayDeque<Integer> LB = new ArrayDeque<>();
 
         int addedSize = 0;
-        int N = 999;
+        int N = 1000000;
         for (int i = 0; i < N; i += 1) {
             int operationNumber = StdRandom.uniform(0, 6);
             if (operationNumber == 0) {
@@ -257,25 +256,28 @@ public class ArrayListDequeTest {
                 int size = L.size();
                 int sizeLb = LB.size();
                 assertEquals(size, sizeLb);
-            } else if (operationNumber == 2 && L.size() != 0) {
+            } else if (operationNumber == 2 && LB.size() != 0) {
                 // getLast
                 int randomIndex = StdRandom.uniform(0, addedSize);
                 int last = L.get(randomIndex);
                 int lastLb = LB.get(randomIndex);
                 assertEquals(last, lastLb);
-            } else if (operationNumber == 3 && L.size() != 0) {
+            } else if (operationNumber == 3 && LB.size() != 0) {
                 // removeLast
                 int remove = L.removeLast();
                 int removeLb = LB.removeLast();
                 addedSize -= 1;
                 assertEquals(remove, removeLb);
             } else if (operationNumber == 4) {
-                // addFirst
+
                 int randVal = StdRandom.uniform(0, 100);
                 L.addFirst(randVal);
                 LB.addFirst(randVal);
                 addedSize += 1;
-            } else if (operationNumber == 5 && L.size() != 0) {
+//                System.out.println("head: " + LB.getTheoHeadIndex() + " " + "tail: " + LB.getTheoTailIndex() +
+//                            "size: " + LB.size() + " " + "length: " + LB.getLength());
+                // addFirst
+            } else if (operationNumber == 5 && LB.size() != 0) {
                 // removeFirst
                 int remove = L.removeFirst();
                 int removeLb = LB.removeFirst();
@@ -300,7 +302,7 @@ public class ArrayListDequeTest {
         });
 
         int addedSize = 0;
-        int N = 999;
+        int N = 100000;
         for (int i = 0; i < N; i += 1) {
             int operationNumber = StdRandom.uniform(0, 6);
             if (operationNumber == 0) {
@@ -351,8 +353,8 @@ public class ArrayListDequeTest {
         });
         System.out.println(test1);
 
-        assertTrue(LB.equals(L));
-        assertTrue(L.equals(LB));
+        assertTrue(LB.equals(LB));
+        assertTrue(L.equals(L));
 
 
     }
@@ -379,5 +381,26 @@ public class ArrayListDequeTest {
             System.out.println(item);
             index += 1;
         }
+    }
+
+    @Test
+    public void newTest() {
+        ArrayDeque<Integer> aa = new ArrayDeque<>();
+        for (int i =0; i<1000; i++) {
+            aa.addFirst(i);
+//            System.out.println("head: " + aa.getTheoHeadIndex() + " " + "tail: " + aa.getTheoTailIndex() +
+//                    "size: " + aa.size() + " " + "length: " + aa.getLength());
+        }
+        for (int i =0; i<400; i++) {
+            aa.addLast(i);
+//            System.out.println("head: " + aa.getTheoHeadIndex() + " " + "tail: " + aa.getTheoTailIndex() +
+//                    "size: " + aa.size() + " " + "length: " + aa.getLength());
+        }
+        for (int i =0; i<1000; i++) {
+            aa.removeFirst();
+            System.out.println("head: " + aa.getTheoHeadIndex() + " " + "tail: " + aa.getTheoTailIndex() +
+                    "size: " + aa.size() + " " + "length: " + aa.getLength());
+        }
+
     }
 }

@@ -151,7 +151,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
             private Node<T> iteratorNode = sentinelOrigin.next;
             @Override
             public boolean hasNext() {
-                return iteratorNode != sentinelOrigin;
+                return iteratorNode != sentinelOrigin && iteratorNode != null;
             }
 
             @Override
@@ -172,17 +172,17 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         if (o == this) {
             return true;
         }
-        if (o instanceof Deque) {
-            if (((Deque<?>) o).size() != this.size) {
+        if (!(o instanceof LinkedListDeque)) {
+            return false;
+        }
+        if (((ArrayDeque<?>) o).size() != this.size) {
+            return false;
+        }
+        for (int i=0;  i<this.size; i++) {
+            if (((ArrayDeque<?>) o).get(i) != this.get(i)) {
                 return false;
             }
-            for (int i=0;  i<this.size; i++) {
-                if (((Deque<?>) o).get(i) != this.get(i)) {
-                    return false;
-                }
-            }
-            return true;
         }
-        return false;
+        return true;
     }
 }
