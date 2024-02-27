@@ -169,8 +169,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public T get(int index) {
         if (index < 0 || index >= size) {
-            System.out.println("Index " + index +
-                    " is out of the ArrayList index " + (size - 1) + ".");
+            System.out.println("out of index");
             return null;
         }
         return arrayDq[indexChange(theoHeadIndex + index)];

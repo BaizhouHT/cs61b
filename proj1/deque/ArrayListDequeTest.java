@@ -17,7 +17,6 @@ public class ArrayListDequeTest {
     public void addLastIsEmptySizeTest() {
 
         ArrayDeque<String> lld1 = new ArrayDeque<String>();
-//        assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
 		lld1.addLast("front");
 
 		// The && operator is the same as "and" in Python.
@@ -230,68 +229,14 @@ public class ArrayListDequeTest {
     }
 
     @Test
-    /** compare test, focus on ...last()
-     * finally check the 2 implementation deque difference
-     */
-    public void randomizedTest() {
-        LinkedListDeque<Integer> L = new LinkedListDeque<>();
-        ArrayDeque<Integer> LB = new ArrayDeque<>();
-
-        int addedSize = 0;
-        int N = 1000000;
-        for (int i = 0; i < N; i += 1) {
-            int operationNumber = StdRandom.uniform(0, 6);
-            if (operationNumber == 0) {
-                // addLast
-                int randVal = StdRandom.uniform(0, 100);
-                L.addLast(randVal);
-                LB.addLast(randVal);
-                addedSize += 1;
-            } else if (operationNumber == 1) {
-                // size
-                int size = L.size();
-                int sizeLb = LB.size();
-                assertEquals(size, sizeLb);
-            } else if (operationNumber == 2 && LB.size() != 0) {
-                // getLast
-                int randomIndex = StdRandom.uniform(0, addedSize);
-                int last = L.get(randomIndex);
-                int lastLb = LB.get(randomIndex);
-                assertEquals(last, lastLb);
-            } else if (operationNumber == 3 && LB.size() != 0) {
-                // removeLast
-                int remove = L.removeLast();
-                int removeLb = LB.removeLast();
-                addedSize -= 1;
-                assertEquals(remove, removeLb);
-            } else if (operationNumber == 4) {
-
-                int randVal = StdRandom.uniform(0, 100);
-                L.addFirst(randVal);
-                LB.addFirst(randVal);
-                addedSize += 1;
-//                System.out.println("head: " + LB.getTheoHeadIndex() + " " + "tail: " + LB.getTheoTailIndex() +
-//                            "size: " + LB.size() + " " + "length: " + LB.getLength());
-                // addFirst
-            } else if (operationNumber == 5 && LB.size() != 0) {
-                // removeFirst
-                int remove = L.removeFirst();
-                int removeLb = LB.removeFirst();
-                addedSize -= 1;
-                assertEquals(remove, removeLb);
-            }
-        }
-    }
-
-    @Test
     /** MaxArrayDeque(...), max()
      * max array list ele test, comparator test
      */
     public void maxArrayDequeTest() {
         LinkedListDeque<Integer> L = new LinkedListDeque<>();
-        ArrayDeque<Integer> La = new ArrayDeque<>();
-        assertTrue(L.equals(La));
-        assertTrue(La.equals(L));
+        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+        assertTrue(L.equals(arrayDeque));
+        assertTrue(arrayDeque.equals(L));
 //        MaxArrayDeque<Integer> LB = new MaxArrayDeque<>(new Comparator<Integer>() {
 //            @Override
 //            public int compare(Integer o1, Integer o2) {
@@ -307,40 +252,40 @@ public class ArrayListDequeTest {
                 // addLast
                 int randVal = StdRandom.uniform(0, 100);
                 L.addLast(randVal);
-                La.addLast(randVal);
+                arrayDeque.addLast(randVal);
                 addedSize += 1;
             } else if (operationNumber == 1) {
                 // size
                 int size = L.size();
-                int sizeLb = La.size();
+                int sizeLb = arrayDeque.size();
                 assertEquals(size, sizeLb);
             } else if (operationNumber == 2 && L.size() != 0) {
                 // getLast
                 int randomIndex = StdRandom.uniform(0, addedSize);
                 int last = L.get(randomIndex);
-                int lastLb = La.get(randomIndex);
+                int lastLb = arrayDeque.get(randomIndex);
                 assertEquals(last, lastLb);
             } else if (operationNumber == 3 && L.size() != 0) {
                 // removeLast
                 int remove = L.removeLast();
-                int removeLb = La.removeLast();
+                int removeLb = arrayDeque.removeLast();
                 addedSize -= 1;
                 assertEquals(remove, removeLb);
             } else if (operationNumber == 4) {
                 // addFirst
                 int randVal = StdRandom.uniform(0, 100);
                 L.addFirst(randVal);
-                La.addFirst(randVal);
+                arrayDeque.addFirst(randVal);
                 addedSize += 1;
             } else if (operationNumber == 5 && L.size() != 0) {
                 // removeFirst
                 int remove = L.removeFirst();
-                int removeLb = La.removeFirst();
+                int removeLb = arrayDeque.removeFirst();
                 addedSize -= 1;
                 assertEquals(remove, removeLb);
             }
-            assertTrue(La.equals(L));
-            assertTrue(L.equals(La));
+            assertTrue(arrayDeque.equals(L));
+            assertTrue(L.equals(arrayDeque));
         }
 
 //        assertTrue(L.equals(LB));
