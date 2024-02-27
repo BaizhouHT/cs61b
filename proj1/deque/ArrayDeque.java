@@ -4,7 +4,8 @@ package deque;
 import java.util.Iterator;
 
 /**
- * @Description: data structure, array implementation of deque, circular implementation with double point
+ * @Description: data structure, array implementation of deque,
+ * @Description: circular implementation with double point
  * @Author: Harrison
  * @Date: 2/25/2024 2:28 PM
  * @Version: 1.0
@@ -13,23 +14,24 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] arrayDq;
     private int size;
     private int theoHeadIndex; // circular implementation head point for negative des
-    public int getTheoHeadIndex() {
-        return this.theoHeadIndex;
-    }
+//    public int getTheoHeadIndex() {
+//        return this.theoHeadIndex;
+//    }
     private int theoTailIndex; // circular implementation tail point for positive des
-    public int getTheoTailIndex() {
-        return this.theoTailIndex;
-    }
-    public int getLength() {
-        return this.arrayDq.length;
-    }
+//    public int getTheoTailIndex() {
+//        return this.theoTailIndex;
+//    }
+//    public int getLength() {
+//        return this.arrayDq.length;
+//    }
 
 
     private int indexChange(int indexBefore) {
         return (arrayDq.length + indexBefore % arrayDq.length) % arrayDq.length;
     }
 
-    public ArrayDeque() {// Constructor
+    public ArrayDeque() {
+        // Constructor
         arrayDq = (T[]) new Object[8];
         size = 0;
         theoHeadIndex = 0;
@@ -44,17 +46,22 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
      * @param negOrPos neg = 0; pos = 1; reset = -1
      */
     private void pointMaintain(int removeOrAdd, int negOrPos) {
-        if (removeOrAdd == 1 && negOrPos == 1) {// addLast() called
+        if (removeOrAdd == 1 && negOrPos == 1) {
+            // addLast() called
             theoTailIndex += 1;
-        } else if (removeOrAdd == 0 && negOrPos == 1) {// removeLast() called
+        } else if (removeOrAdd == 0 && negOrPos == 1) {
+            // removeLast() called
             theoTailIndex -= 1;
-        } else if (removeOrAdd == 1 && negOrPos == 0) {// addFirst() called
+        } else if (removeOrAdd == 1 && negOrPos == 0) {
+            // addFirst() called
             theoHeadIndex -= 1;
-        } else if (removeOrAdd == 0 && negOrPos == 0) {// removeFirst() called
+        } else if (removeOrAdd == 0 && negOrPos == 0) {
+            // removeFirst() called
             theoHeadIndex += 1;
-        } else if (removeOrAdd == -1 && negOrPos == -1) {// reset
+        } else if (removeOrAdd == -1 && negOrPos == -1) {
+            // reset
             theoHeadIndex = 0;
-            theoTailIndex = Math.max(size-1, 0);
+            theoTailIndex = Math.max(size - 1, 0);
         }
     }
 
@@ -67,19 +74,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private void resize() {
         if (size == arrayDq.length) {
             T[] temp = (T[]) new Object[arrayDq.length * 2];
-            for (int i=theoHeadIndex, j=0; i<=theoTailIndex; i ++, j++ ) {
+            for (int i = theoHeadIndex, j = 0; i <= theoTailIndex; i++, j++) {
                 temp[j] = arrayDq[indexChange(i)];
             }
             arrayDq = temp;
-            pointMaintain(-1,-1);
+            pointMaintain(-1, -1);
 
-        } else if(size < (arrayDq.length/4+1)) {
-            T[] temp = (T[]) new Object[arrayDq.length*3/5];
-            for (int i=theoHeadIndex, j=0; i<=theoTailIndex; i ++, j++ ) {
+        } else if (size < (arrayDq.length / 4 + 1)) {
+            T[] temp = (T[]) new Object[arrayDq.length * 3 / 5];
+            for (int i = theoHeadIndex, j = 0; i <= theoTailIndex; i++, j++) {
                 temp[j] = arrayDq[indexChange(i)];
             }
             arrayDq = temp;
-            pointMaintain(-1,-1);
+            pointMaintain(-1, -1);
         }
     }
 
@@ -90,7 +97,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         if (size == 0) {
             arrayDq[0] = item;
-            pointMaintain(-1,-1);
+            pointMaintain(-1, -1);
         } else {
             pointMaintain(1, 1);
             arrayDq[indexChange(theoTailIndex)] = item;
@@ -105,7 +112,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         if (size == 0) {
             arrayDq[0] = item;
-            pointMaintain(-1,-1);
+            pointMaintain(-1, -1);
         } else {
             pointMaintain(1, 0);
             arrayDq[indexChange(theoHeadIndex)] = item;
@@ -124,8 +131,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             System.out.println();
             return;
         }
-        for (int i=theoHeadIndex; i<=theoTailIndex; i ++ ) {
-            System.out.print(arrayDq[indexChange(i)] + (i==theoTailIndex?"\n":" "));
+        for (int i = theoHeadIndex; i <= theoTailIndex; i++) {
+            System.out.print(arrayDq[indexChange(i)] + (i == theoTailIndex ? "\n" : " "));
         }
     }
 
@@ -162,10 +169,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public T get(int index) {
         if (index < 0 || index >= size) {
-            System.out.println("Index "+ index + " is out of the ArrayList index " + (size-1) + ".");
+            System.out.println("Index " + index + " is out of the ArrayList index " + (size - 1) + ".");
             return null;
         }
-        return arrayDq[indexChange(theoHeadIndex+index)];
+        return arrayDq[indexChange(theoHeadIndex + index)];
     }
 
     @Override
@@ -188,6 +195,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return itor;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == null) {
             return false;
@@ -198,11 +206,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (!(o instanceof LinkedListDeque)) {
             return false;
         }
-        if (((LinkedListDeque<?>) o).size() != this.size) {
+        LinkedListDeque<?> lld = (LinkedListDeque<?>) o;
+        if (lld.size() != size) {
             return false;
         }
-        for (int i=0; i<this.size; i++) {
-            if (((LinkedListDeque<?>) o).get(i) != this.get(i)) {
+        for (int i = 0; i < size; i++) {
+            if (!lld.get(i).equals(this.get(i))) {
                 return false;
             }
         }

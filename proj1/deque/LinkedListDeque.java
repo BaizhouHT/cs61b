@@ -125,14 +125,14 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
                 temp = temp.next;
             }
         } catch (Exception e) {
-            System.out.println("Index "+ index + " is out of the list index " + (size-1) + ".");
+            System.out.println("Index "+ index + " is out of the list index " + (size - 1) + ".");
         }
         return item;
     }
 
     public T getRecursive(int index) {
         if (index >= size ) {
-            System.out.println("Index "+ index + " is out of the list index " + (size-1) + ".");
+            System.out.println("Index "+ index + " is out of the list index " + (size - 1) + ".");
             return null;
         }
         return recursiveProcess(index, sentinelOrigin);
@@ -165,6 +165,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         return itor;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == null) {
             return false;
@@ -172,14 +173,16 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         if (o == this) {
             return true;
         }
-        if (!(o instanceof LinkedListDeque)) {
+        if (!(o instanceof ArrayDeque)) {
             return false;
         }
-        if (((ArrayDeque<?>) o).size() != this.size) {
+
+        ArrayDeque<?> lld = (ArrayDeque<?>) o;
+        if (lld.size() != this.size) {
             return false;
         }
         for (int i=0;  i<this.size; i++) {
-            if (((ArrayDeque<?>) o).get(i) != this.get(i)) {
+            if (!lld.get(i).equals(this.get(i))) {
                 return false;
             }
         }

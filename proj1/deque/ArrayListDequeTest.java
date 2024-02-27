@@ -293,13 +293,15 @@ public class ArrayListDequeTest {
      */
     public void maxArrayDequeTest() {
         LinkedListDeque<Integer> L = new LinkedListDeque<>();
-//        ArrayDeque<Integer> LB = new ArrayDeque<>();
-        MaxArrayDeque<Integer> LB = new MaxArrayDeque<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1-o2;
-            }
-        });
+        ArrayDeque<Integer> LB = new ArrayDeque<>();
+        assertTrue(L.equals(LB));
+        assertTrue(LB.equals(L));
+//        MaxArrayDeque<Integer> LB = new MaxArrayDeque<>(new Comparator<Integer>() {
+//            @Override
+//            public int compare(Integer o1, Integer o2) {
+//                return o1-o2;
+//            }
+//        });
 
         int addedSize = 0;
         int N = 100000;
@@ -341,21 +343,21 @@ public class ArrayListDequeTest {
                 addedSize -= 1;
                 assertEquals(remove, removeLb);
             }
+            assertTrue(LB.equals(L));
+            assertTrue(L.equals(LB));
         }
-        int test = LB.max();
-        System.out.println(test);
 
-        int test1 = LB.max(new Comparator<Integer>() {// min test
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2-o1;
-            }
-        });
-        System.out.println(test1);
-
-        assertTrue(LB.equals(LB));
-        assertTrue(L.equals(L));
-
+//        assertTrue(L.equals(LB));
+//        int test = LB.max();
+//        System.out.println(test);
+//
+//        int test1 = LB.max(new Comparator<Integer>() {// min test
+//            @Override
+//            public int compare(Integer o1, Integer o2) {
+//                return o2-o1;
+//            }
+//        });
+//        System.out.println(test1);
 
     }
 
@@ -383,24 +385,4 @@ public class ArrayListDequeTest {
         }
     }
 
-    @Test
-    public void newTest() {
-        ArrayDeque<Integer> aa = new ArrayDeque<>();
-        for (int i =0; i<1000; i++) {
-            aa.addFirst(i);
-//            System.out.println("head: " + aa.getTheoHeadIndex() + " " + "tail: " + aa.getTheoTailIndex() +
-//                    "size: " + aa.size() + " " + "length: " + aa.getLength());
-        }
-        for (int i =0; i<400; i++) {
-            aa.addLast(i);
-//            System.out.println("head: " + aa.getTheoHeadIndex() + " " + "tail: " + aa.getTheoTailIndex() +
-//                    "size: " + aa.size() + " " + "length: " + aa.getLength());
-        }
-        for (int i =0; i<1000; i++) {
-            aa.removeFirst();
-            System.out.println("head: " + aa.getTheoHeadIndex() + " " + "tail: " + aa.getTheoTailIndex() +
-                    "size: " + aa.size() + " " + "length: " + aa.getLength());
-        }
-
-    }
 }
