@@ -8,7 +8,7 @@ import java.util.Iterator;
  * @Date: 2/24/2024 12:03 PM
  * @Version: 1.0
  */
-public class LinkedListDeque<T> implements Deque<T> {
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
 
     private class Node<T> {
         private T item;
@@ -28,7 +28,6 @@ public class LinkedListDeque<T> implements Deque<T> {
      */
     private Node sentinelOrigin;
     private int size;
-    private Node iteratorNode = sentinelOrigin;
 
     /**
      * Constructor of deque, initialize an empty deque
@@ -147,27 +146,32 @@ public class LinkedListDeque<T> implements Deque<T> {
         return (T) recursiveProcess(recDeepth, sen.next);
     }
 
-    @Override
     public Iterator<T> iterator() {
         Iterator<T> itor = new Iterator<T>() {
+            private Node<T> iteratorNode = sentinelOrigin.next;
             @Override
             public boolean hasNext() {
-                return iteratorNode != null && iteratorNode.next != null;
+                return iteratorNode != sentinelOrigin;
             }
 
             @Override
             public T next() {
-                return (T) nextNode().item;
+                T item = iteratorNode.item;
+                iteratorNode = iteratorNode.next;
+                return item;
             }
 
-            public Node nextNode() {
-                return iteratorNode.next;
-            }
         };
         return itor;
     }
 
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
         if (o instanceof Deque) {
             if (((Deque<?>) o).size() != this.size) {
                 return false;

@@ -8,7 +8,7 @@ import java.util.Iterator;
  * @Date: 2/27/2024 9:52 AM
  * @Version: 1.0
  */
-public interface Deque<T> extends Iterable<T>{
+public interface Deque<T>{
     public void addFirst(T item);
     public void addLast(T item);
     default public boolean isEmpty() {
@@ -22,6 +22,5 @@ public interface Deque<T> extends Iterable<T>{
     public T removeFirst();
     public T removeLast();
     public T get(int index);
-    public Iterator<T> iterator();
 
 }

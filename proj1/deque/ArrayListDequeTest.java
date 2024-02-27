@@ -364,14 +364,20 @@ public class ArrayListDequeTest {
     public void iteratoTest() {
 
         ArrayDeque<String> lld1 = new ArrayDeque<String>();
-
+        String[] check = new String[3];
         lld1.addLast("front");
         lld1.addLast("middle");
         lld1.addLast("back");
-        lld1.printDeque();
+        check[0] = "front";
+        check[1] = "middle";
+        check[2] = "back";
+//        lld1.printDeque();
 
-        while (lld1.iterator().hasNext()) {
-            System.out.println(lld1.iterator().next());
-        };
+        int index = 0;
+        for (String item : lld1) {
+            assertEquals("Should be equal", check[index], item);
+            System.out.println(item);
+            index += 1;
+        }
     }
 }

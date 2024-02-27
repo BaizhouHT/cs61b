@@ -221,14 +221,16 @@ public class LinkedListDequeTest {
     public void iteratoTest() {
 
         LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
-
+        String[] check = {"front","middle","back"};
         lld1.addLast("front");
         lld1.addLast("middle");
         lld1.addLast("back");
-        lld1.printDeque();
 
-        while (lld1.iterator().hasNext()) {
-            System.out.println(lld1.iterator().next());
-        };
+        int index = 0;
+        for (String each:lld1) {
+            assertEquals(check[index], each);
+            System.out.println(each);
+            index ++;
+        }
     }
 }

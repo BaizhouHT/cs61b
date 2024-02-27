@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @Date: 2/25/2024 2:28 PM
  * @Version: 1.0
  */
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] arrayDq;
     private int size;
     private int theoHeadIndex; // circular implementation head point for negative des
@@ -160,24 +160,32 @@ public class ArrayDeque<T> implements Deque<T>{
     }
 
     @Override
-    public Iterator<T> iterator()  {
+    public Iterator<T> iterator() {
         Iterator<T> itor = new Iterator<T>() {
-            private int iteratorIndex = -1;
+
+            private int currIndex = 0;
             @Override
             public boolean hasNext() {
-                return iteratorIndex+1<size && arrayDq[indexChange(theoHeadIndex+iteratorIndex)] != null;
+                return currIndex < size;
             }
 
             @Override
             public T next() {
-                iteratorIndex += 1;
-                return arrayDq[indexChange(theoHeadIndex+iteratorIndex)];
+                T item = get(currIndex);
+                currIndex += 1;
+                return item;
             }
         };
         return itor;
     }
 
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
         if (o instanceof Deque) {
             if (((Deque<?>) o).size() != this.size) {
                 return false;
